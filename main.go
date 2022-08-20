@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"periph.io/x/periph/conn/i2c/i2creg"
-	"periph.io/x/periph/conn/physic"
-	"periph.io/x/periph/devices/bmxx80"
-	"periph.io/x/periph/host"
+	"periph.io/x/conn/v3/i2c/i2creg"
+	"periph.io/x/conn/v3/physic"
+	"periph.io/x/devices/v3/bmxx80"
+	"periph.io/x/host/v3"
 
 	"net/http"
 
@@ -44,7 +44,7 @@ func getbme280Data() bme280data {
 	}
 
 	// Open a handle to the first available I²C bus:
-	bus, err := i2creg.Open("")
+	bus, err := i2creg.Open("1")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,5 +83,4 @@ func main() {
 	}()
 	http.Handle("/metrics", promhttp.Handler())
 	http.ListenAndServe(":2112", nil)
-	log.Println("one")
 }
