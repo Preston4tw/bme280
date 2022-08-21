@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bme280
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "8080"
+spec:
+  nodeSelector:
+    sensor: bme280
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: 998
+    runAsUser: 65534
+    fsGroup: 998
+  # imagePullSecrets:
+  #   - name: registry-key
+  volumes:
+    - name: dev-i2c-1
+      hostPath:
+        path: /dev/i2c-1
+  containers:
+  - name: bme280
+    image: ghcr.io/preston4tw/bme280:latest
+    imagePullPolicy: IfNotPresent
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - mountPath: /dev/i2c-1
+        name: dev-i2c-1
