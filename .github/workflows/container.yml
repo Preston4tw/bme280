@@ -3,8 +3,11 @@ name: build and publish container
 # Controls when the workflow will run
 on:
   push:
-    branches:
-      - 'master'
+    paths:
+      - 'Dockerfile'
+      - 'main.go'
+      - 'go.mod'
+      - 'go.sum'
 
 # permissions are needed if pushing to ghcr.io
 permissions: 
@@ -12,6 +15,7 @@ permissions:
 
 jobs:
   build:
+    if: github.event_name == 'push' && github.head_ref == 'master'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
