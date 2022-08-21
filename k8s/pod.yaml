@@ -14,8 +14,6 @@ spec:
     runAsGroup: 998
     runAsUser: 65534
     fsGroup: 998
-  # imagePullSecrets:
-  #   - name: registry-key
   volumes:
     - name: dev-i2c-1
       hostPath:
